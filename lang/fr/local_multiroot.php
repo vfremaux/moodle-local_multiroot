@@ -1,5 +1,4 @@
 <?php
 
 $string['pluginname'] = 'Routeur multi-domaine';
-$string['badthemename'] = 'Répertoire de theme inexistant';
-
+$string['badthemename'] = 'RÃ©pertoire de theme inexistant';

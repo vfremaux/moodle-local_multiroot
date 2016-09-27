@@ -1,11 +1,6 @@
 This is the documentation of the Moodle multiroot tweak, allowing a moodle to be operated
 through several domain identities
 
-Dependancies
-======================
-
-Needs filter "multiroot" to be installed and enabled
-
 Installation
 ======================
 
@@ -23,8 +18,3 @@ At the end of your configuration file, manage the local/multiroot/lib.php file b
 multiroot_theme_override_hook();
 
 Multiroot at the moment does not support HTTPS, but changing keeps being simple.
-
-How it works
-======================
-Multiroot dynamically get the wwwroot from the incoming domain query, and changes $CFG->wwwroot if the incoming domain
-is matching the 

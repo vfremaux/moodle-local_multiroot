@@ -1,5 +1,4 @@
 <?php
-
 // This file is NOT part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -14,29 +13,40 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')){
 
-	if (!empty($CFG->allowmultirootdomains)){
-		$domains = explode(',', $CFG->allowmultirootdomains);
-		if (!in_array($_SERVER['HTTP_HOST'], $domains)){
-			echo '<span class="color:red;font-size:1.3em">Unauthorized multiroot host</span>';
-		}
-	}
+defined('MOODLE_EARLY_INTERNAL') || die('Early internal');
 
-	$CFG->wwwroot   = 'http://'.$_SERVER['HTTP_HOST']; // Multi host routing
+if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
+
+    if (!empty($CFG->allowmultirootdomains)) {
+
+        // Avoid collision with VMoodle hosts
+        if ((@$CFG->mainwwwroot == $CFG->wwwroot) || !isset($CFG->mainwwwroot)) {
+            $domains = explode(',', $CFG->allowmultirootdomains);
+            if (!in_array($_SERVER['HTTP_HOST'], $domains)) {
+                echo '<span class="color:red;font-size:1.3em">Unauthorized multiroot host</span>';
+            } else {
+                $CFG->wwwroot = 'http://'.$_SERVER['HTTP_HOST']; // Multi host routing
+            }
+        }
+    }
 }
 
-function multiroot_theme_override_hook(){
-	global $CFG, $HOSTS_THEMES;
-	
-	$hostname = $_SERVER['HTTP_HOST'];
-		
-	if (isset($HOSTS_THEMES) && array_key_exists($hostname, $HOSTS_THEMES)){
-		if (!is_dir($CFG->dirroot.'/theme/'.$HOSTS_THEMES[$hostname])){
-			print_error('badthemename', 'local_multiroot');
-		}
-		$CFG->theme = $HOSTS_THEMES[$hostname]; 
-		
-		// $CFG->theme = $HOSTS_THEMES[$hostname];
-	}
+function multiroot_theme_override_hook() {
+    global $CFG, $HOSTS_THEMES;
+
+    if (defined('CLI_SCRIPT') && CLI_SCRIPT) {
+        return;
+    }
+
+    $hostname = $_SERVER['HTTP_HOST'];
+
+    $switchtheme = isset($HOSTS_THEMES) && array_key_exists($hostname, $HOSTS_THEMES);
+
+    if ($switchtheme) {
+        if (!is_dir($CFG->dirroot.'/theme/'.$HOSTS_THEMES[$hostname])) {
+            print_error('badthemename', 'local_multiroot');
+        }
+        $CFG->theme = $HOSTS_THEMES[$hostname]; 
+    }
 }
