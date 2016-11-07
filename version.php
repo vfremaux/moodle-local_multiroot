@@ -1,5 +1,5 @@
 <?php
-// This file is NOT part of Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,20 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Version details.
+ *
  * @package     local_multiroot
  * @category    local
- * @author      Valery Fremaux <valery.fremaux@club-internet.fr>
- * @copyright   2013 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   2015 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2013100300;   // The (date) version of this plugin.
-$plugin->requires = 2015050500;   // Requires this Moodle version.
+$plugin->version  = 2013100300;   // The (date) version of this plugin
+$plugin->requires = 2011120500;   // Requires this Moodle version
 $plugin->component = 'local_multiroot';
-$plugin->release = '2.9.0 (build 2013100300)';
+$plugin->release = '2.5.0 (build 2013100300)';
 $plugin->maturity = MATURITY_BETA;
 
 // Non moodle attributes.
-$plugin->codeincrement = '2.9.0000';
+$plugin->codeincrement = '2.8.0000';
