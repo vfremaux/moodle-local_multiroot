@@ -14,19 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_EARLY_INTERNAL') || die('Early internal');
+if (!defined('MOODLE_EARLY_INTERNAL')) {
+    defined('MOODLE_INTERNAL') || die();
+}
 
 if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
 
     if (!empty($CFG->allowmultirootdomains)) {
 
-        // Avoid collision with VMoodle hosts
+        // Avoid collision with VMoodle hosts.
         if ((@$CFG->mainwwwroot == $CFG->wwwroot) || !isset($CFG->mainwwwroot)) {
             $domains = explode(',', $CFG->allowmultirootdomains);
             if (!in_array($_SERVER['HTTP_HOST'], $domains)) {
                 echo '<span class="color:red;font-size:1.3em">Unauthorized multiroot host</span>';
             } else {
-                $CFG->wwwroot = 'http://'.$_SERVER['HTTP_HOST']; // Multi host routing
+                $CFG->wwwroot = 'http://'.$_SERVER['HTTP_HOST']; // Multi host routing.
             }
         }
     }

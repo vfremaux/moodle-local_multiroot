@@ -26,8 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2013100300;   // The (date) version of this plugin
-$plugin->requires = 2016051900;   // Requires this Moodle version
+$plugin->version  = 2013100300;   // The (date) version of this plugin.
+$plugin->requires = 2016051900;   // Requires this Moodle version.
 $plugin->component = 'local_multiroot';
 $plugin->release = '3.1.0 (build 2013100300)';
 $plugin->maturity = MATURITY_BETA;
