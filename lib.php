@@ -1,5 +1,5 @@
 <?php
-// This file is NOT part of Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
  */
 
-defined('MOODLE_EARLY_INTERNAL') || die('Early internal');
+if (!defined('MOODLE_EARLY_INTERNAL')) {
+    defined('MOODLE_INTERNAL') || die();
+}
 
 if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
 
@@ -41,7 +43,7 @@ if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
 }
 
 function multiroot_theme_override_hook() {
-    global $CFG, $HOSTS_THEMES;
+    global $CFG;
 
     if (defined('CLI_SCRIPT') && CLI_SCRIPT) {
         return;
@@ -49,12 +51,12 @@ function multiroot_theme_override_hook() {
 
     $hostname = $_SERVER['HTTP_HOST'];
 
-    $switchtheme = isset($HOSTS_THEMES) && array_key_exists($hostname, $HOSTS_THEMES);
+    $switchtheme = isset($CFG->hosts_themes) && array_key_exists($hostname, $CFG->hosts_themes);
 
     if ($switchtheme) {
-        if (!is_dir($CFG->dirroot.'/theme/'.$HOSTS_THEMES[$hostname])) {
+        if (!is_dir($CFG->dirroot.'/theme/'.$hosts_themes[$hostname])) {
             print_error('badthemename', 'local_multiroot');
         }
-        $CFG->theme = $HOSTS_THEMES[$hostname]; 
+        $CFG->theme = $CFG->hosts_themes[$hostname]; 
     }
 }
