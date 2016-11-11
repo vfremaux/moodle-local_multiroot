@@ -54,9 +54,9 @@ function multiroot_theme_override_hook() {
     $switchtheme = isset($CFG->hosts_themes) && array_key_exists($hostname, $CFG->hosts_themes);
 
     if ($switchtheme) {
-        if (!is_dir($CFG->dirroot.'/theme/'.$hosts_themes[$hostname])) {
+        if (!is_dir($CFG->dirroot.'/theme/'.$CFG->hosts_themes[$hostname])) {
             print_error('badthemename', 'local_multiroot');
         }
-        $CFG->theme = $CFG->hosts_themes[$hostname]; 
+        $CFG->theme = $CFG->hosts_themes[$hostname];
     }
 }
