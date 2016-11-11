@@ -17,20 +17,20 @@
 /**
  * Version details.
  *
- * @package     local_multiroot
- * @category    local
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   2015 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    local_multiroot
+ * @category   local
+ * @author     Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright  2010 onwards Valery Fremaux <valery.fremaux@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2013100300;   // The (date) version of this plugin
-$plugin->requires = 2011120500;   // Requires this Moodle version
+$plugin->version  = 2013100300;   // The (date) version of this plugin.
+$plugin->requires = 2011120500;   // Requires this Moodle version.
 $plugin->component = 'local_multiroot';
 $plugin->release = '2.5.0 (build 2013100300)';
-$plugin->maturity = MATURITY_BETA;
+$plugin->maturity = MATURITY_RC;
 
 // Non moodle attributes.
 $plugin->codeincrement = '2.8.0000';
