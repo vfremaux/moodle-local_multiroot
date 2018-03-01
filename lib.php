@@ -26,6 +26,14 @@ if (!defined('MOODLE_EARLY_INTERNAL')) {
     defined('MOODLE_INTERNAL') || die();
 }
 
+/**
+ * This function is not implemented in thos plugin, but is needed to mark
+ * the vf documentation custom volume availability.
+ */
+function local_multiroot_supports_feature() {
+    assert(1);
+}
+
 if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
 
     if (!empty($CFG->allowmultirootdomains)) {
