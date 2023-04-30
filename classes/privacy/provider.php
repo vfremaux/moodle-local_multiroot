@@ -14,24 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Version details.
- *
- * @package    local_multiroot
- * @category   local
- * @author     Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright  2010 onwards Valery Fremaux <valery.fremaux@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
- */
+namespace local_multiroot\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2013100300;   // The (date) version of this plugin.
-$plugin->requires = 2018112800;   // Requires this Moodle version.
-$plugin->component = 'local_multiroot';
-$plugin->release = '3.6.0 (build 2013100300)';
-$plugin->maturity = MATURITY_RC;
-
-// Non moodle attributes.
-$plugin->codeincrement = '3.6.0000';
-
+class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}

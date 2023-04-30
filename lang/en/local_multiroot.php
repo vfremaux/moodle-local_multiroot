@@ -24,5 +24,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
  */
 
+// Privacy.
+$string['privacy:metadata'] = 'The Multiroot Local plugin does not store any personal data about any user.';
+
 $string['pluginname'] = 'MultiRoot Router';
 $string['badthemename'] = 'Bad theme directory name';
