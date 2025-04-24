@@ -18,3 +18,13 @@ At the end of your configuration file, manage the local/multiroot/lib.php file b
 multiroot_theme_override_hook();
 
 Multiroot at the moment does not support HTTPS, but changing keeps being simple.
+
+Switching theme for each multiroot
+===============================================
+
+In config.php, you may define a theme routing array such as :
+
+$CFG->hosts_themes = ['<hostname>' => '<theme_name>'];
+
+any unmentionned host will fallback onto standard configurated theme.
+
