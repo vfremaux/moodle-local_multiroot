@@ -31,8 +31,9 @@ $plugin->requires = 2022112801;   // Requires this Moodle version.
 $plugin->component = 'local_multiroot';
 $plugin->release = '4.5.0 (build 2025011400)';
 $plugin->maturity = MATURITY_RC;
-$plugin->supported = [401, 405];
+$plugin->supported = [403, 405];
 
 // Non moodle attributes.
 $plugin->codeincrement = '4.5.0000';
+$plugin->privacy = 'public';
 
