@@ -27,24 +27,73 @@ if (!defined('MOODLE_EARLY_INTERNAL')) {
 }
 
 /**
- * This function is not implemented in thos plugin, but is needed to mark
+ * This function is not implemented in this plugin, but is needed to mark
  * the vf documentation custom volume availability.
  */
 function local_multiroot_supports_feature() {
     assert(1);
 }
 
-if (!empty($CFG->multiroot) && !defined('CLI_SCRIPT')) {
+/**
+ * Boots an alternate wwwroot related to the multiroot accepted domains.
+ */
+function multiroot_boot_hook() {
+    global $CFG, $ME;
 
-    if (!empty($CFG->allowmultirootdomains)) {
+    if (!empty($CFG->multiroot) &&
+            !defined('CLI_SCRIPT') &&
+                    !empty($CFG->allowmultirootdomains)) {
 
-        // Avoid collision with VMoodle hosts.
-        if ((@$CFG->mainwwwroot == $CFG->wwwroot) || !isset($CFG->mainwwwroot)) {
-            $domains = explode(',', $CFG->allowmultirootdomains);
-            if (!in_array($_SERVER['HTTP_HOST'], $domains)) {
-                echo '<span class="color:red;font-size:1.3em">Unauthorized multiroot host</span>';
-            } else {
-                $CFG->wwwroot = 'http://'.$_SERVER['HTTP_HOST']; // Multi host routing.
+        // echo "We are multirooting ";
+        $domains = explode(',', $CFG->allowmultirootdomains);
+
+        if (count($domains) > 1 ) {
+            // Note : at this pint we are before setup and most Moodle globals are not working.
+            // We liberalize access to font resources when in multiroot. This may help caches to provide
+            // font even when comming from another alias.
+            if (preg_match($_SERVER['SCRIPT_FILENAME'], $ME)) {
+                header('Access-Control-Allow-Origin: *');
+            }
+        }
+
+        $protocol = ($_SERVER['SERVER_PORT'] == '443') ? 'https' : 'http';
+
+        // host that is required in query.
+        $host = $_SERVER['HTTP_HOST'];
+
+        if (!in_array($host, $domains)) {
+            // If required host NOT in allowed multiroot list.
+            // Moodle standard libs are not yet loaded. print_error not accessible.
+            echo "<span class=\"color:red;font-size:1.3em\">Unauthorized multiroot host {$host}</span>";
+            die;
+        }
+
+        // adapts the visible wwwroot.
+        $CFG->wwwroot = $protocol.'://'.$host;
+
+        if (!empty($CFG->multiroot_mainhost_prefixes)) {
+            if (array_key_exists($host, $CFG->multiroot_mainhost_prefixes)) {
+                $CFG->mainhostprefix = $CFG->multiroot_mainhost_prefixes[$host];
+            }
+        }
+
+        // Force some core configs for the domain.
+        if (!empty($CFG->multiroot_config_overrides)) {
+            if (array_key_exists($host, $CFG->multiroot_config_overrides)) {
+                foreach ($CFG->multiroot_config_overrides[$host] as $cfg => $value) {
+                    $CFG->$cfg = $value;
+                }
+            }
+        }
+
+        // Force some plugins configs for the domain.
+        if (!empty($CFG->multiroot_plugins_config_overrides)) {
+            if (array_key_exists($host, $CFG->multiroot_plugins_config_overrides)) {
+                foreach ($CFG->multiroot_plugins_config_overrides[$host] as $plugin => $pconfig) {
+                    foreach ($pconfig as $cfg => $value) {
+                        $CFG->forced_plugin_settings[$plugin][$cfg] = $value;
+                    }
+                }
             }
         }
     }
