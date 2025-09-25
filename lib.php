@@ -51,7 +51,7 @@ function multiroot_boot_hook() {
             // Note : at this pint we are before setup and most Moodle globals are not working.
             // We liberalize access to font resources when in multiroot. This may help caches to provide
             // font even when comming from another alias.
-            if (preg_match($_SERVER['SCRIPT_FILENAME'], $ME)) {
+            if (preg_match('#'.$_SERVER['SCRIPT_FILENAME'].'#', $ME)) {
                 header('Access-Control-Allow-Origin: *');
             }
         }
